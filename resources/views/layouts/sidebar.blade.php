@@ -14,7 +14,8 @@
                             </a>
                             <br>
                             <div class="flex items-center gap-2">
-                                <a href="" class="text-[13px] text-blue-600 font-medium py-1">{{$post->user->name}}</a>  <a href="" class="text-slate-700 text-[13px]"><i class="fa-solid fa-comments"></i> {{$post->comment->count()}}</a>
+                                <a href="{{ route('userProfile', $post->user->id) }}" class="text-[13px] text-blue-600 font-medium py-1">{{$post->user->name}}</a>  
+                                <a href="{{ route('post.show', $post->user->id) }}" class="text-slate-700 text-[13px]"><i class="fa-solid fa-comments"></i> {{$post->comment->count()}}</a>
 
                             <span class="text-slate-600 text-[13px]"><i class="fa-solid fa-eye"></i> {{$post->views ?? 0}}</span>
                             </div>
@@ -30,7 +31,7 @@
                 @if ($bestWriters)
                     @foreach ($bestWriters as $writer)
                         <li class="px-3 py-2 shadow-md rounded-sm shadow-sky-200 border border-blue-200">
-                            <a href="" class="text-[15px] font-medium text-yellow-600 hover:underline hover:text-blue-600"> {{ $writer->name }} </a> <span class="text-[12px] text-gray-700">44 followers</span>
+                            <a href="{{ route('userProfile', $writer->id) }}" class="text-[15px] font-medium text-yellow-600 hover:underline hover:text-blue-600"> {{ $writer->name }} </a> <span class="text-[12px]  text-blue-500">{{ $writer->follower->count() }} followers</span>
                             <br>
                             <div class="flex items-center gap-2">
                                 <a href="" class="text-slate-700 text-[13px]"><i class="fa-solid fa-newspaper"></i>

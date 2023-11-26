@@ -2,7 +2,7 @@
 
 @section('contents')
     <br><br>
-    <main class="mt-6 max-w-[1000px] mx-auto grid grid-cols-1  md:grid-cols-3 gap-8 lg:gap-6 px-6">
+    <main class="mt-6 max-w-[1000px] mx-auto grid grid-cols-1 items-start md:grid-cols-3 gap-8 lg:gap-6 px-6">
         <div class="grid flex-col gap-3 items-start  md:ml-2 md:mx-0  md:col-span-2 ">
 
             @if($posts->isNotEmpty())
@@ -14,7 +14,7 @@
                             @php
                                 $title = Str::limit(strip_tags($post->title), 60, '...');
                             @endphp
-                            {{ $title }} ~</a> <span class="text-[13px] text-yellow-500">{{ $post->user->name }}</span>
+                            {{ $title }} ~</a> <a href="{{ route('userProfile', $post->user->id) }}" class="text-[13px] text-yellow-500">{{ $post->user->name }}</a>
                         </div>
                         <p class="mt-[6px] !text-[12px] text-gray-700">
                             @php
@@ -43,11 +43,11 @@
             <h2 class="text-center text-2xl my-6">No post avaiable</h2>
             @endif
             
-            @if($posts->count() > 8)
+            {{-- @if($posts->count() > 8) --}}
             <div class="blog">
                 {{ $posts->links() }}
             </div>
-            @endif
+            {{-- @endif --}}
         </div>
 
         @include('layouts.sidebar')

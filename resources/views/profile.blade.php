@@ -90,11 +90,11 @@
                 <a href="{{ route('create.post') }}" class="text-center"><button class="btn">Create Content</button></a>
             @endif
 
-            @if($posts->count() > 8)
-                <div class="blog">
-                    {{ $posts->links() }}
-                </div>
-            @endif
+            {{-- @if($posts->count() > 8) --}}
+            <div class="blog">
+                {{ $posts->links() }}
+            </div>
+            {{-- @endif --}}
         </div>
     </main>
 

@@ -19,11 +19,11 @@
                     </div>
                     
                     <div class="flex gap-2">
-                        <a href="{{ route('userProfile', Auth::user()->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
+                        <a href="{{ route('userProfile', $user->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
                             <i class="fa-solid fa-square-rss mr-1 text-[15px]"></i>{{ $posts->count() }} posts
                         </a>
                         
-                        <a href="{{ route('userFollowers', Auth::user()->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
+                        <a href="{{ route('userFollowers', $user->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
                             <i class="fa-solid fa-users mr-1 text-[14px]"></i>{{ $followers->count() }} followers
                         </a>
                     </div>
@@ -96,11 +96,11 @@
                 <a href="{{ route('index') }}" class="text-center"><button class="btn">Explore more contents</button></a>
             @endif
 
-            @if($posts->count() > 8)
-                <div class="blog">
-                    {{ $posts->links() }}
-                </div>
-            @endif
+            {{-- @if($posts->count() > 8) --}}
+            <div class="blog">
+                {{ $posts->links() }}
+            </div>
+            {{-- @endif --}}
         </div>
     </main>
 
