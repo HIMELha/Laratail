@@ -40,7 +40,7 @@
             <hr class="w-[27%] h-[1px] bg-slate-700"> 
             </div>
 
-            <a href="" class="mx-auto btn !bg-yellow-600">Apply here</a>
+            <a href="{{ route('register') }}" class="mx-auto btn !bg-yellow-600">Apply here</a>
         </form>
     </main>
 

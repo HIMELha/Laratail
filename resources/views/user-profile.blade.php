@@ -9,9 +9,15 @@
         <div class="grid flex-col md:col-span-1  md:mr-2">
             <div class="shadow-md shadow-blue-100 border border-slate-300 rounded-[4px] px-4 py-3">
                 <div class="flex flex-col">
-                    <h2 class="text-[17px] !text-orange-500 font-medium capitalize">{{ Auth::user()->name }}
-                    </h2> 
-
+                    <div class="flex gap-2">
+                        <h2 class="inline-block text-[17px] !text-orange-500 font-medium capitalize">{{ $user->name }}</h2> 
+                        <form action="{{ route('follow', $user->id) }}" method="Post">
+                            @csrf
+                            <button type="submit" class="btn 
+                             !py-[1px] !px-[5px] {{ $isFollow ? '!bg-red-500' : ''}}">{{ $isFollow ? 'unfollow' : 'follow'}}</button>
+                        </form>
+                    </div>
+                    
                     <div class="flex gap-2">
                         <a href="{{ route('userProfile', Auth::user()->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
                             <i class="fa-solid fa-square-rss mr-1 text-[15px]"></i>{{ $posts->count() }} posts
@@ -49,9 +55,9 @@
             
             <div class="blog flex justify-between items-center">
 
-                <a href="" class="text-[15px] font-medium text-blue-600 hover:underline">Content dashboard</a>
+                <a href="" class="text-[15px] font-medium text-blue-600 ">{{$user->name}} Contents</a>
 
-                <a href="{{ route('create.post') }}"><button class="btn">Create post</button></a>
+                <a href=""><button class="btn bg-red-500">Report Profile</button></a>
             </div>
 
             @if($posts->isNotEmpty())
@@ -87,7 +93,7 @@
             @else
 
                 <h2 class="text-xl text-center text-gray-600 mt-4">No contents available</h2>
-                <a href="{{ route('create.post') }}" class="text-center"><button class="btn">Create Content</button></a>
+                <a href="{{ route('index') }}" class="text-center"><button class="btn">Explore more contents</button></a>
             @endif
 
             @if($posts->count() > 8)

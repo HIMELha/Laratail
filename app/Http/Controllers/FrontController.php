@@ -6,6 +6,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Follower;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +52,63 @@ class FrontController extends Controller
         ]);
         session()->flash('success', 'Comment submitted success');
         return redirect()->back();
+    }
+
+
+    public function userProfile(int $id){
+        $user = User::where('id', $id)->first();
+        if(!$user){
+            return redirect()->route('index');
+        }
+        if($user->id == Auth::user()->id){
+            return redirect()->route('profile');
+        }
+        
+        $posts = Post::where('user_id', $user->id)->with('user')->latest()->paginate(8);
+        $followers = Follower::where('writer_id' , $user->id)->latest()->paginate(12);
+        $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
+        $data['posts'] = $posts;
+        $data['user'] = $user;
+        $data['followers'] = $followers;
+        $data['isFollow'] = $isFollow;
+        return view('user-profile', $data);
+        
+    }
+
+    public function userFollowers(int $id){
+        $user = User::where('id', $id)->first();
+        if(!$user){
+            return redirect()->route('index');
+        }
+        
+        $posts = Post::where('user_id', $user->id)->with('user')->latest()->paginate(8);
+        $followers = Follower::where('writer_id' , $user->id)->latest()->paginate(12);
+        $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
+        $data['posts'] = $posts;
+        $data['user'] = $user;
+        $data['followers'] = $followers;
+        $data['isFollow'] = $isFollow;
+        return view('followers', $data);
+        
+    }
+
+    public function follow(int $writer_id){
+        $user = User::find($writer_id);
+        if(!$user){
+            return redirect()->back();
+        }
+
+        $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
+
+        if($isFollow){
+            $isFollow->delete($isFollow->id);
+            return redirect()->back()->with('success', 'You unfollowed '.$user->name.'');
+        }
+        Follower::create([
+            'user_id' => Auth::user()->id,
+            'writer_id' => $user->id
+        ]);
+        return redirect()->back()->with('success', 'You followed '.$user->name.'');
     }
 
 }
