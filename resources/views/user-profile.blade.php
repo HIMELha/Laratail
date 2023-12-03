@@ -11,11 +11,14 @@
                 <div class="flex flex-col">
                     <div class="flex gap-2">
                         <h2 class="inline-block text-[17px] !text-orange-500 font-medium capitalize">{{ $user->name }}</h2> 
-                        <form action="{{ route('follow', $user->id) }}" method="Post">
-                            @csrf
-                            <button type="submit" class="btn 
-                             !py-[1px] !px-[5px] {{ $isFollow ? '!bg-red-500' : ''}}">{{ $isFollow ? 'unfollow' : 'follow'}}</button>
-                        </form>
+                        @if (Auth::check())
+                            <form action="{{ route('follow', $user->id) }}" method="Post">
+                                @csrf
+                                <button type="submit" class="btn 
+                                !py-[1px] !px-[5px] {{ $isFollow ? '!bg-red-500' : ''}}">{{ $isFollow ? 'unfollow' : 'follow'}}</button>
+                            </form>
+                        @endif
+                        
                     </div>
                     
                     <div class="flex gap-2">
@@ -28,15 +31,20 @@
                         </a>
                     </div>
 
-                    <span class="text-gray-700 text-sm mt-1">
-                        "If you do not raise your voice against genocide, then you're also a war criminal." <br>
-                        ~ Tamin Islam | GazaGenocide
-                    </span>
+                    @if ($user->bio != '')
+                        <span class="text-gray-700 text-sm mt-1">
+                            {{ $user->bio }}
+                            
+                        </span>
+                    @else
+                        <span class="text-gray-700 text-sm mt-1">Hi, I'm laratail member</span>
+                    @endif
+
                     <div class="mt-2">
                         <span class="text-[13px] font-medium">About me</span>
 
-                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> Author at Laratail</p>
-                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in rangpur</p>
+                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> {{ $user->works }}</p>
+                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in {{ $user->lives }}</p>
                     </div>
 
 

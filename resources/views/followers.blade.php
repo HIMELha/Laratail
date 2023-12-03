@@ -13,10 +13,14 @@
                         <h2 class="inline-block text-[17px] !text-orange-500 font-medium capitalize">{{ $user->name }}</h2> 
                         <form action="{{ route('follow', $user->id) }}" method="Post">
                             @csrf
-                            @if ($user->id != Auth::user()->id)
-                            <button type="submit" class="btn 
-                             !py-[1px] !px-[5px] {{ $isFollow ? '!bg-red-500' : ''}}">{{ $isFollow ? 'unfollow' : 'follow'}}</button>
-                            @endif
+                            @auth
+                                @if ($user->id != Auth::user()->id)
+                                    <button type="submit" class="btn 
+                                    !py-[1px] !px-[5px] {{ $isFollow ? '!bg-red-500' : ''}}">{{ $isFollow ? 'unfollow' : 'follow'}}</button>
+                                @endif 
+                            @endauth
+                                
+                            
                             
                         </form>
                     </div>
@@ -34,14 +38,13 @@
 
 
                     <span class="text-gray-700 text-sm mt-1">
-                        "If you do not raise your voice against genocide, then you're also a war criminal." <br>
-                        ~ Tamin Islam | GazaGenocide
+                        {{ $user->bio }}
                     </span>
                     <div class="mt-2">
                         <span class="text-[13px] font-medium">About me</span>
 
-                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> Author at Laratail</p>
-                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in rangpur</p>
+                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> {{ $user->works }}</p>
+                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in {{ $user->lives }}</p>
                     </div>
 
 
@@ -61,9 +64,8 @@
             <div class="blog flex justify-between items-center">
 
                 <h3 class="text-[15px] font-medium text-blue-600 ">{{$user->name}} Followers</h3>
-                @if ($user->id != Auth::user()->id)
+
                 <a href=""><button class="btn bg-red-500">Report Profile</button></a>
-                @endif
             </div>
 
             @if($followers->isNotEmpty())

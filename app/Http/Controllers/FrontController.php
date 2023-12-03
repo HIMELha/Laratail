@@ -60,30 +60,38 @@ class FrontController extends Controller
         if(!$user){
             return redirect()->route('index');
         }
-        if($user->id == Auth::user()->id){
-            return redirect()->route('profile');
+        if(Auth::check()){
+            if($user->id == Auth::user()->id){
+                return redirect()->route('profile');
+            }
+            $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
+            $data['isFollow'] = $isFollow;
         }
+        
         
         $posts = Post::where('user_id', $user->id)->with('user')->latest()->paginate(8);
         $followers = Follower::where('writer_id' , $user->id)->latest()->paginate(12);
-        $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
         $data['posts'] = $posts;
         $data['user'] = $user;
         $data['followers'] = $followers;
-        $data['isFollow'] = $isFollow;
+        $data['isFollow'] = $isFollow ?? false;
         return view('user-profile', $data);
         
     }
 
     public function userFollowers(int $id){
         $user = User::where('id', $id)->first();
+        $isFollow = 0;
         if(!$user){
             return redirect()->route('index');
         }
         
+        if(Auth::check()){
+            $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
+        }
+
         $posts = Post::where('user_id', $user->id)->with('user')->latest()->paginate(8);
         $followers = Follower::where('writer_id' , $user->id)->latest()->paginate(12);
-        $isFollow = Follower::where(['user_id' => Auth::user()->id, 'writer_id' => $user->id])->first();
         $data['posts'] = $posts;
         $data['user'] = $user;
         $data['followers'] = $followers;

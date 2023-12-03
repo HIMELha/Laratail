@@ -40,6 +40,9 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+        Route::get('/profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit');
+        Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/create/post', [PostController::class, 'create'])->name('create.post');
         Route::post('/store/post', [PostController::class, 'store'])->name('store.post');

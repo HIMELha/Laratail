@@ -9,8 +9,13 @@
         <div class="grid flex-col md:col-span-1  md:mr-2">
             <div class="shadow-md shadow-blue-100 border border-slate-300 rounded-[4px] px-4 py-3">
                 <div class="flex flex-col">
-                    <h2 class="text-[17px] !text-orange-500 font-medium capitalize">{{ Auth::user()->name }}
-                    </h2> 
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-[17px] !text-orange-500 font-medium capitalize">{{ Auth::user()->name }}
+                        </h2> 
+                        <a href="{{ route('profile.edit') }}"  class="btn !py-[1px] !px-[5px] !bg-red-500">edit profile</a>
+                    </div>
+
+                    
 
                     <div class="flex gap-2">
                         <a href="{{ route('userProfile', Auth::user()->id) }}" class="text-[14px] text-slate-800 font-medium hover:underline">
@@ -21,16 +26,19 @@
                             <i class="fa-solid fa-users mr-1 text-[14px]"></i>{{ $followers->count() }} followers
                         </a>
                     </div>
-
-                    <span class="text-gray-700 text-sm mt-1">
-                        "If you do not raise your voice against genocide, then you're also a war criminal." <br>
-                        ~ Tamin Islam | GazaGenocide
-                    </span>
+                    @if (Auth::user()->bio != '')
+                        <span class="text-gray-700 text-sm mt-1">
+                            {{ Auth::user()->bio }}
+                        </span>
+                    @else
+                        <span class="text-gray-700 text-sm mt-1">Hi, I'm laratail member</span>
+                    @endif
+                    
                     <div class="mt-2">
                         <span class="text-[13px] font-medium">About me</span>
 
-                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> Author at Laratail</p>
-                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in rangpur</p>
+                        <p class="icon"><i class="fa-solid fa-briefcase icon"></i> {{ Auth::user()->works }}</p>
+                        <p class="icon"><i class="fa-solid fa-location-dot icon"></i> Live in {{ Auth::user()->lives }}</p>
                     </div>
 
 
@@ -50,7 +58,9 @@
             <div class="blog flex justify-between items-center">
 
                 <a href="" class="text-[15px] font-medium text-blue-600 hover:underline">Content dashboard</a>
-
+                @if (Session::has('success'))
+                   <p class="text-green-600">{{ Session::get('success') }}</p> 
+                @endif
                 <a href="{{ route('create.post') }}"><button class="btn">Create post</button></a>
             </div>
 

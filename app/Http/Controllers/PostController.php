@@ -66,9 +66,11 @@ class PostController extends Controller
                 }
             }
         }
-
+        
+        $related = Post::inRandomOrder()->take(3)->get();
         $writers = User::whereIn('name', $writers)->get();
         $data['bestWriters'] = $writers;
+        $data['related'] = $related;
         $data['topPosts'] = $topPosts;
         $data['post'] = $post;
         $data['comments'] = $comments;
