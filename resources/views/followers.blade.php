@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>{{ $user->name }}'s Followers</title>
+@endsection
 @section('contents')
     
     <br><br>

@@ -1,5 +1,7 @@
  @extends('layouts.app')
-
+@section('header')
+    <title>{{$post->title}}</title>
+@endsection
 @section('contents')
     <br><br>
     <main class="mt-6 max-w-[1000px] mx-auto grid  md:grid-cols-3 items-start gap-8 lg:gap-6 ">

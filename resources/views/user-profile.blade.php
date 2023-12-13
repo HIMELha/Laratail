@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>{{$user->name}} Laratail writer profile</title>
+@endsection
 @section('contents')
     
     <br><br>

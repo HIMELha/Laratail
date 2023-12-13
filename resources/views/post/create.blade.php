@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>Create new post</title>
+@endsection
 @section('contents')
     
     <br><br>

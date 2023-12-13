@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>My profile</title>
+@endsection
 @section('contents')
     
     <br><br>

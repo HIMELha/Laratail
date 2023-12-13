@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>{{ Auth::user()->name }} - Update Profile</title>
+@endsection
 @section('contents')
     
     <br><br>

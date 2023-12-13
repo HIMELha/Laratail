@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>Laratail - registration</title>
+@endsection
 @section('contents')
     
     <br><br>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>Laratail - login</title>
+@endsection
 @section('contents')
     
     <br><br>
@@ -7,7 +9,8 @@
 
         <form action="{{ route('verifyLogin') }}" method="POST" class="w-[350px] mx-auto flex flex-col gap-2 shadow-md px-4 py-3 rounded-md">
             @csrf
-            
+            <p>Demo user: user@mail.com</p>
+            <p>Demo password: 123456</p>
             <h2 class="text-xl font-medium text-gray-700 mb-2">Sing in to account</h2> 
             <div class="flex flex-col gap-[3px] ">
                 <label for="email" class="label">Email address</label>

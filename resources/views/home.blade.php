@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('header')
+    <title>Laratails is an open sourc knowledge sharing Platform</title>
+@endsection
 @section('contents')
     <br><br>
     <main class="mt-6 max-w-[1000px] mx-auto grid grid-cols-1 items-start md:grid-cols-3 gap-8 lg:gap-6 px-6">
