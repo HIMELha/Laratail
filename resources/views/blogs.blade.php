@@ -7,7 +7,7 @@
     <main class="mt-6 max-w-[1000px] mx-auto grid  md:grid-cols-3 items-start gap-8 lg:gap-6 ">
         
         <div class="grid flex-col justify-center gap-3 md:ml-2 md:mx-0  md:col-span-2 max-w-[100%] md:w-[620px]">
-            <div class="flex flex-col max-w-[100%] md:w-[620px]">
+            <div class="flex flex-col max-w-[100%] md:w-[620px] px-4">
                 <div class="flex w-full justify-between items-center">
                     <div>
                         <h1 class="text-[16px] font-medium uppercase text-sky-600 hover:text-blue-600">{{ $post->title }}</h1> 
@@ -16,17 +16,14 @@
                 </div>
             </div>
 
-
             <!-- heres and error -->
 
-           <div class="border border-gray-200 mt-8 py-3 px-4 rounded-md max-w-[100%] md:w-[620px]">
+           <div class="border border-gray-200 mt-8 py-3 px-4 rounded-md max-w-[100%] md:w-[620px] ">
                 <p style="word-wrap: break-word; !w-[600px] !mx-4" >{!! $post->description !!}</p> 
             </div>
 
 
-
-
-            <div class="mt-8">
+            <div class="mt-8 px-4">
                 <div class="flex flex-col md:flex-row justify-self-center gap-4">
 
                     <div class="w-full flex flex-col gap-1 order-0 md:order-1">

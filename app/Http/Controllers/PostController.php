@@ -8,6 +8,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 
@@ -19,6 +20,7 @@ class PostController extends Controller
 
     public function store(Request $request){
         $user = Auth::user();
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:10|unique:posts',
             'description' => 'required|min:30',
@@ -36,6 +38,7 @@ class PostController extends Controller
                 'tags' => $request->tags,
                 'description' => $request->description
             ]);
+            Cache::foget('posts');
             session()->flash('success', 'Post created successfuly');
             return redirect()->route('profile');
         }
@@ -43,14 +46,20 @@ class PostController extends Controller
 
 
     public function show(Request $request, $slug){
-        
-        $post = Post::where('slug', $slug)->first();
 
+        $post = Cache::remember("post-{$slug}", 1000, function () use($slug) {
+            $post = Post::where('slug', $slug)->first();
+            Cache::increament("$post->views");
+            return $post;
+            
+        });
+        
         $comments = Comment::where('post_id', $post->id)->latest()->get();
         if(!$post){
             return redirect()->route('index');
         }
         $post->views = $post->views + 1 ;
+        
         $post->update();
 
         $topPosts = Post::where('views', '>=' , 20)->limit(5)->orderBy('views','desc')->get();

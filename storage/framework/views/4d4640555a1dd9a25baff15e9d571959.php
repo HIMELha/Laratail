@@ -45,12 +45,12 @@
             <h2 class="text-center text-2xl my-6">No post avaiable</h2>
             <?php endif; ?>
             
-            
+            <?php if($posts->hasPages()): ?>
             <div class="blog">
                 <?php echo e($posts->links()); ?>
 
             </div>
-            
+            <?php endif; ?>
         </div>
 
         <?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

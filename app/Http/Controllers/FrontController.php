@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Follower;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class FrontController extends Controller
 {
-    public function index(){
-        $posts = Post::latest()->paginate(10);
-        $topPosts = Post::where('views', '>=' , 20)->limit(5)->orderBy('views','desc')->get();
+    public function index(Request $request){
+
+        $posts = Cache::remember('posts', Carbon::now()->addHours(1), function () {
+            return Post::with('comment')->latest()->paginate(10);
+        });
+
+        $topPosts = Post::with(['user', 'comment'])->where('views', '>=' , 20)->limit(5)->orderBy('views','desc')->get();
         $bestWriters = User::with('post')->limit(6)->get();
         $writers = [];
         

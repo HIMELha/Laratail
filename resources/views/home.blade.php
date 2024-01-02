@@ -45,11 +45,11 @@
             <h2 class="text-center text-2xl my-6">No post avaiable</h2>
             @endif
             
-            {{-- @if($posts->count() > 8) --}}
+            @if($posts->hasPages())
             <div class="blog">
                 {{ $posts->links() }}
             </div>
-            {{-- @endif --}}
+            @endif
         </div>
 
         @include('layouts.sidebar')
